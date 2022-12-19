@@ -1,11 +1,13 @@
+import { Provider } from 'react-redux';
 import './App.css';
-import Header from './components/Header';
+import Routing from './routes';
+import store from './redux/store';
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-    </div>
+    <Provider  store={store}>
+      <Routing/>
+    </Provider>
   );
 }
 

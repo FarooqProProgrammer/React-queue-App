@@ -1,6 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { auth } from '../../config/db'
+import {FacebookAuthProvider ,signInWithPopup} from "firebase/auth"
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/Action/setuser'
 
 const Header = () => {
+
+  const provider = new FacebookAuthProvider();
+  const dispatch = useDispatch();
+  const [profile,setProfile] = useState(false)
+
+  const facebookLogin = () =>{
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // The signed-in user info.
+      const user = result.user;
+      console.log(user);
+      dispatch(setUser(user))
+      setProfile(true)
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      const credential = FacebookAuthProvider.credentialFromResult(result);
+      const accessToken = credential.accessToken;
+  
+      // ...
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setProfile(false)
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = FacebookAuthProvider.credentialFromError(error);
+  
+      // ...
+    });
+  }
+
   return (
     <div>
         <header className="text-gray-600 body-font">
@@ -15,11 +52,25 @@ const Header = () => {
       <a className="mr-5 hover:text-gray-900">Third Link</a>
       <a className="mr-5 hover:text-gray-900">Fourth Link</a>
     </nav>
-    <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
+    
+    {/* <button onClick={facebookLogin} className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
-    </button>
+    </button> */}
+
+    {profile === true ?  <><p className='text-2xl font-black'>Name:</p><div className="img w-[90px] h-[60px] border-2 border-black" style={{ borderRadius: "100%" }}>
+
+          </div></>
+    :
+<button onClick={facebookLogin} className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </button> 
+    }
+  
+  
   </div>
 </header>
     </div>

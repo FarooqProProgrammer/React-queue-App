@@ -1,16 +1,22 @@
-import { Provider } from 'react-redux';
-import './App.css';
-import Routing from './routes';
-import {store,persistor} from './redux/store';
-import { PersistGate } from 'redux-persist/integration/react'
+import React from 'react'
+import Navbar from './common/Navbar/Navbar'
+import Hero from './common/hero/Hero'
+import About from './common/About/About'
+import Project from './common/Project/Project'
+import Contact from './common/ContactUs/Contact'
+import Footer from './common/Footer'
+
 function App() {
   return (
-    <Provider  store={store}>
-       <PersistGate loading={null} persistor={persistor}>
-         <Routing/>
-       </PersistGate>
-    </Provider>
-  );
+    <div>
+      <Navbar/>
+      <Hero/>
+      <About/>
+      <Project/>
+      <Contact/>
+      <Footer/>
+    </div>
+  )
 }
 
-export default App;
+export default App

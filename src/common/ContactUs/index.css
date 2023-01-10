@@ -1,0 +1,22 @@
+.ContactUs {
+    width: 100%;
+    height: 600px;
+    border: 2px solid black;
+}
+.ContactUs .contactTitle{
+    width: 100%;
+    height: 70px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ContactUs .form {
+    width: 100%;
+    height: 530px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
